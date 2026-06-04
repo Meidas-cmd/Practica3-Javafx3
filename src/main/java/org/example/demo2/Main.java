@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        actividad5();
+        actividad10();
 
     }
 
@@ -201,8 +201,84 @@ public class Main {
 
 
     }
-    public static void actividad9(){
+    public static void actividad9() {
 
+        try {
+            File archivoOriginal = new File("src/main/resources/actividad9.txt");
+            File archivoTemporal = new File("src/main/resources/actividad9Temp.txt");
 
+            BufferedReader lector = new BufferedReader(new FileReader(archivoOriginal));
+            BufferedWriter escritor = new BufferedWriter(new FileWriter(archivoTemporal));
+
+            String lineaActual;
+            while ((lineaActual = lector.readLine()) != null) {
+                String[] palabras = lineaActual.split(" ");
+
+                for (int i = 0; i < palabras.length; i++) {
+                    if (!palabras[i].isEmpty()) {
+                        String primeraLetra = String.valueOf(Character.toUpperCase(palabras[i].charAt(0)));
+                        String restoDeLaPalabra = palabras[i].substring(1).toLowerCase();
+                        palabras[i] = primeraLetra + restoDeLaPalabra;
+                    }
+
+                    escritor.write(palabras[i]);
+
+                    if (i < palabras.length - 1) {
+                        escritor.write(" ");
+                    }
+                }
+                escritor.newLine();
+            }
+
+            lector.close();
+            escritor.close();
+
+            if (archivoOriginal.delete()) {
+                archivoTemporal.renameTo(archivoOriginal);
+                System.out.println("Archivo modificado correctamente.");
+            } else {
+                System.out.println("No se ha podido reemplazar el archivo original.");
+            }
+
+        } catch (IOException error) {
+            System.out.println("Ocurrió un error al procesar el archivo: " + error.getMessage());
+            throw new RuntimeException(error);
+        }
+    }
+
+    public static void actividad10() {
+
+        try {
+            File primerArchivo = new File("src/main/resources/actividad10a.txt");
+            File segundoArchivo = new File("src/main/resources/actividad10b.txt");
+            File archivoCombinado = new File("src/main/resources/actividad10Final.txt");
+
+            Scanner lec1 = new Scanner(primerArchivo);
+            Scanner lec2 = new Scanner(segundoArchivo);
+            BufferedWriter escritor = new BufferedWriter(new FileWriter(archivoCombinado));
+
+            while (lec1.hasNext() && lec2.hasNext()) {
+                escritor.write(lec1.next() + " ");
+                escritor.write(lec2.next() + " ");
+            }
+
+            while (lec1.hasNext()) {
+                escritor.write(lec1.next() + " ");
+            }
+
+            while (lec2.hasNext()) {
+                escritor.write(lec2.next() + " ");
+            }
+
+            lec1.close();
+            lec2.close();
+            escritor.close();
+
+            System.out.println("Archivo combinado  correctamente.");
+
+        } catch (IOException error) {
+            System.out.println(error.getMessage());
+            throw new RuntimeException(error);
+        }
     }
     }
