@@ -1,6 +1,8 @@
 package org.example.demo2;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        actividad4();
+        actividad5();
 
     }
 
@@ -46,8 +48,7 @@ public class Main {
         System.out.println("Longitud: " + carpeta.length());
         System.out.println("Ruta absoluta: " + carpeta.getAbsolutePath());
     }
-
-
+    
     public static void actividad4 (){
 
         System.out.print("En que carpeta quieres crear el archivo:");
@@ -73,5 +74,97 @@ public class Main {
 
     }
 
+    public static void actividad5(){
 
+        System.out.println("Dame la ruta de la carpeta que quieras ver los archivos: ");
+        String ruta = entrada.nextLine();
+
+
+
+        File carpeta = new File(ruta);
+        String[] archivos = carpeta.list();
+
+        if (archivos != null && archivos.length > 0){
+
+            for (String a : archivos){
+
+                System.out.println(a);
+
+            }
+
+        }else {
+            System.out.println("No hay archivos");
+        }
+
+    }
+
+    public static  void actividad6(){
+
+        int cont = 0;
+        System.out.println("Que palabra quieres buscar:");
+        String pal = entrada.nextLine();
+
+        try {
+            BufferedReader lector = new BufferedReader(new FileReader("src/resources/actividad6.txt"));
+            String linea;
+
+            while ((linea = lector.readLine()) != null){
+                String[] palabras = linea.split(" ");
+                for (String p : palabras){
+                    if (pal.equalsIgnoreCase(p)){
+
+                        cont++;
+                    }
+                }
+            }
+            lector.close();
+        }catch (IOException e){
+
+            System.out.println(e.getMessage());
+
+            throw  new RuntimeException(e);
+
+        }
+
+        System.out.println("La palabra " + pal + " aparece " + cont + " veces.");
+
+
+
+
+    }
+
+    public static void actividad7(){
+
+        int cont = 0;
+        System.out.println("Que palabra quieres buscar:");
+        String pal = entrada.nextLine();
+
+        try {
+            File archivo = new File("src/resources/actividad6.txt");
+            Scanner lector = new Scanner(archivo);
+
+            while (lector.hasNextLine()){
+                String linea = lector.nextLine();
+                String[] partes = linea.split(" ");
+                for (int i = 0; i < partes.length; i++) {
+                    if (pal.equalsIgnoreCase(partes[i])){
+                        cont++;
+                    }
+                }
+            }
+            lector.close();
+        }catch (IOException e){
+
+            System.out.println(e.getMessage());
+
+            throw  new RuntimeException(e);
+
+        }
+
+        System.out.println("La palabra " + pal + " aparece " + cont + " veces.");
+
+
+
+
+    }
     }
