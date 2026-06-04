@@ -1,9 +1,6 @@
 package org.example.demo2;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
@@ -48,7 +45,7 @@ public class Main {
         System.out.println("Longitud: " + carpeta.length());
         System.out.println("Ruta absoluta: " + carpeta.getAbsolutePath());
     }
-    
+
     public static void actividad4 (){
 
         System.out.print("En que carpeta quieres crear el archivo:");
@@ -164,6 +161,47 @@ public class Main {
         System.out.println("La palabra " + pal + " aparece " + cont + " veces.");
 
 
+
+
+    }
+
+    public static void actividad8(){
+
+        System.out.print("En que carpeta quieres crear el archivo:");
+        File directorio = new File(entrada.next());
+        if (directorio.mkdir())  System.out.println("Directorio creado");
+        else  System.out.println("No se pudo crear el directorio");
+
+        System.out.print("Cuantos archivos quieres crear:");
+        int cantidad = entrada.nextInt();
+
+        System.out.println("Como se va a llamar el archivo");
+        String nombre = entrada.next();
+
+        for(int i = 0; i < cantidad; i++){
+            try {
+                File archivo = new File(directorio + "/"+nombre+"("+i+")"+".txt");
+
+                if (archivo.createNewFile())  System.out.println("Archivo creado");
+                else  System.out.println("El archivo ya existe");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                FileWriter archivo = new FileWriter(directorio + "/"+nombre+"("+i+")"+".txt");
+                BufferedWriter mensaje = new BufferedWriter(archivo);
+                mensaje.write("Este es el fichero " + nombre+"("+i+")"+".txt");
+                mensaje.close();
+            }catch (IOException e){
+                System.out.println("Ha habido algun problema");
+                e.printStackTrace();
+            }
+        }
+
+
+
+    }
+    public static void actividad9(){
 
 
     }
